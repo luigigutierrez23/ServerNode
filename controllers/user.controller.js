@@ -1,38 +1,56 @@
-const { request, response } = require("express");
+const { request, response } = require('express');
+const bcryptjs = require('bcryptjs');
 
-const GetUser = (req = request, res = response) => {
-  const params = req.query;
+const User = require('../models/user.model');
+
+const GetUser = async (req = request, res = response) => {
+  const { limit = 5, from = 0 } = req.query;
+  const users = await User.find().skip(Number(from)).limit(Number(limit));
+
   res.json({
-    message: "get API - Controller",
-    params,
+    users,
   });
 };
 
-const PostUser = (req = request, res = response) => {
-  const body = req.body;
+const PostUser = async (req = request, res = response) => {
+  const { name, email, password, role } = req.body;
+  const user = new User({ name, email, password, role });
+
+  //Encrypt password
+  const salt = bcryptjs.genSaltSync();
+  user.password = bcryptjs.hashSync(password, salt);
+
+  //Save user
+  await user.save();
   res.json({
-    message: "post API - Controller",
-    body: body,
+    user,
   });
 };
 
-const PutUser = (req = request, res = response) => {
+const PutUser = async (req = request, res = response) => {
   const id = req.params.id;
-  res.json({
-    message: "put API - Controller",
-    id,
-  });
+  const { _id, password, google, ...user } = req.body;
+
+  //TODO: Valid with DB
+  if (password) {
+    const salt = bcryptjs.genSaltSync();
+    user.password = bcryptjs.hashSync(password, salt);
+  }
+
+  //Save changes
+  const userDB = await User.findByIdAndUpdate(id, user);
+  res.json(userDB);
 };
 
 const DeleteUser = (req = request, res = response) => {
   res.json({
-    message: "delete API - Controller",
+    message: 'delete API - Controller',
   });
 };
 
 const PatchUser = (req = request, res = response) => {
   res.json({
-    message: "patch API - Controller",
+    message: 'patch API - Controller',
   });
 };
 

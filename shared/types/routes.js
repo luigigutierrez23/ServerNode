@@ -1,5 +1,5 @@
 const RoutesPath = {
-  user: "/api/user",
+  user: '/api/user',
 };
 
 module.exports = RoutesPath;

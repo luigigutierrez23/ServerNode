@@ -1,21 +1,27 @@
-const express = require("express");
-const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
 
-const RoutesPath = require("../shared/commonTypes/routes");
-console.log(RoutesPath);
+const RoutesPath = require('../shared/types/routes');
+const { dbConnection } = require('../database/config');
+
 class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
     this.usersPath = RoutesPath.user;
 
-    console.log(this.usersPath);
+    //Database Connection
+    this.dbConnection();
 
     //Middlewares
     this.middlewares();
 
     //Routes
     this.routes();
+  }
+
+  async dbConnection() {
+    await dbConnection();
   }
 
   middlewares() {
@@ -26,11 +32,11 @@ class Server {
     this.app.use(express.json());
 
     //Public path
-    this.app.use(express.static("public"));
+    this.app.use(express.static('public'));
   }
 
   routes() {
-    this.app.use(this.usersPath, require("../routes/user.routes"));
+    this.app.use(this.usersPath, require('../routes/user.routes'));
   }
 
   listen() {
