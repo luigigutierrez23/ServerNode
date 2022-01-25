@@ -3,13 +3,26 @@ const bcryptjs = require('bcryptjs');
 
 const User = require('../models/user.model');
 
-const GetUser = async (req = request, res = response) => {
+const GetUsers = async (req = request, res = response) => {
   const { limit = 5, from = 0 } = req.query;
-  const users = await User.find().skip(Number(from)).limit(Number(limit));
+  const query = { status: true };
+
+  const [total, users] = await Promise.all([
+    User.countDocuments(query),
+    User.find(query).skip(Number(from)).limit(Number(limit)),
+  ]);
 
   res.json({
+    total,
     users,
   });
+};
+
+const GetUser = async (req = request, res = response) => {
+  const { id } = req.params;
+
+  const user = await User.findOne({ id });
+  res.json(user);
 };
 
 const PostUser = async (req = request, res = response) => {
@@ -42,22 +55,19 @@ const PutUser = async (req = request, res = response) => {
   res.json(userDB);
 };
 
-const DeleteUser = (req = request, res = response) => {
-  res.json({
-    message: 'delete API - Controller',
-  });
-};
+const DeleteUser = async (req = request, res = response) => {
+  const { id } = req.params;
 
-const PatchUser = (req = request, res = response) => {
-  res.json({
-    message: 'patch API - Controller',
-  });
+  //Change status false and keep the record.
+  const user = await User.findByIdAndUpdate(id, { status: false });
+
+  res.json(user);
 };
 
 module.exports = {
+  GetUsers,
   GetUser,
   PostUser,
   PutUser,
   DeleteUser,
-  PatchUser,
 };

@@ -9,16 +9,25 @@ const {
 } = require('../shared/helpers/dbValidators');
 
 const {
+  GetUsers,
   GetUser,
   PostUser,
   PutUser,
   DeleteUser,
-  PatchUser,
 } = require('../controllers/user.controller');
 
 const router = Router();
 
-router.get('/', GetUser);
+router.get('/', GetUsers);
+router.get(
+  '/:id',
+  [
+    check('id', 'Is not a valid id').isMongoId(),
+    check('id').custom(existUserById),
+    validateFields,
+  ],
+  GetUser
+);
 router.post(
   '/',
   [
@@ -44,7 +53,14 @@ router.put(
   ],
   PutUser
 );
-router.delete('/', DeleteUser);
-router.patch('/', PatchUser);
+router.delete(
+  '/:id',
+  [
+    check('id', 'Is not a valid id').isMongoId(),
+    check('id').custom(existUserById),
+    validateFields,
+  ],
+  DeleteUser
+);
 
 module.exports = router;
