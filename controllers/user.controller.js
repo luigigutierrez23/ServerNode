@@ -60,6 +60,7 @@ const DeleteUser = async (req = request, res = response) => {
 
   //Change status false and keep the record.
   const user = await User.findByIdAndUpdate(id, { status: false });
+  const authenticatedUser = req.user;
 
   res.json(user);
 };
