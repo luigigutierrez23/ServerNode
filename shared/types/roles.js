@@ -4,4 +4,6 @@ const EnumRoles = {
   VENTAS_ROLE: 'ventas',
 };
 
-module.exports = EnumRoles;
+module.exports = {
+  EnumRoles,
+};

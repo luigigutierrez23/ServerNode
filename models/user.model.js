@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const { EnumRoles } = require('../shared/types/roles');
 
 const UserSchema = Schema({
   name: {
@@ -20,7 +21,7 @@ const UserSchema = Schema({
   role: {
     type: String,
     required: [true, 'Role is required'],
-    enum: ['admin', 'user'],
+    enum: [EnumRoles.ADMIN_ROLE, EnumRoles.USER_ROLE],
   },
   status: {
     type: Boolean,
