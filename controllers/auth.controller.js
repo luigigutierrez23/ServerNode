@@ -3,8 +3,7 @@ const bcryptjs = require('bcryptjs');
 
 const User = require('../models/user.model');
 
-const { generateJWT } = require('../shared/helpers/jwtHelper');
-const { googleVerify } = require('../shared/helpers/googleVerify');
+const { generateJWT, googleVerify } = require('../shared/helpers');
 const { EnumRoles } = require('../shared/types/roles');
 
 const Login = async (req = request, res = response) => {
