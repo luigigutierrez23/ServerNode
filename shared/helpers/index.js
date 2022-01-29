@@ -1,9 +1,9 @@
 const dbValidators = require('./dbValidators');
-const jwtHelper = require('./jwtHelper');
 const googleVerify = require('./googleVerify');
+const jwtValidator = require('./jwtValidator');
 
 module.exports = {
   ...dbValidators,
-  ...jwtHelper,
   ...googleVerify,
+  ...jwtValidator,
 };

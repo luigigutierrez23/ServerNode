@@ -3,7 +3,7 @@ const bcryptjs = require('bcryptjs');
 
 const User = require('../models/user.model');
 
-const { generateJWT, googleVerify } = require('../shared/helpers');
+const { getJWT, googleVerify } = require('../shared/helpers');
 const { EnumRoles } = require('../shared/types/roles');
 
 const Login = async (req = request, res = response) => {
@@ -30,7 +30,7 @@ const Login = async (req = request, res = response) => {
       });
     }
 
-    const token = await generateJWT(user.id);
+    const token = await getJWT(user.id);
 
     return res.json({
       user,
@@ -75,7 +75,7 @@ const GoogleSignIn = async (req = request, res = response) => {
     }
 
     //Generate JWT
-    const token = await generateJWT(user.id);
+    const token = await getJWT(user.id);
 
     return res.json({
       user,
