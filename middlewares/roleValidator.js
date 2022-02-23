@@ -1,5 +1,5 @@
 const { response, request } = require('express');
-const EnumRoles = require('../shared/types/roles');
+const { EnumRoles } = require('../shared/types/roles');
 
 const isAdminRole = (req = request, res = response, next) => {
   if (!req.user) {
@@ -9,7 +9,6 @@ const isAdminRole = (req = request, res = response, next) => {
   }
 
   const { role, name } = req.user;
-
   if (role !== EnumRoles.ADMIN_ROLE) {
     return res.status(401).json({
       msg: `${name} doesn't have admin role`,
@@ -31,7 +30,6 @@ const isRole = (...roles) => {
         msg: `Services require this roles: ${roles}`,
       });
     }
-    console.log(roles);
     next();
   };
 };

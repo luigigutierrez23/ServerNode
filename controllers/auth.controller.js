@@ -1,7 +1,7 @@
 const { response, request } = require('express');
 const bcryptjs = require('bcryptjs');
 
-const User = require('../models/user.model');
+const { User } = require('../models');
 
 const { getJWT, googleVerify } = require('../shared/helpers');
 const { EnumRoles } = require('../shared/types/roles');

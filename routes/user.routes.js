@@ -21,7 +21,7 @@ const {
   PutUser,
   DeleteUser,
 } = require('../controllers/user.controller');
-const EnumRoles = require('../shared/types/roles');
+const { EnumRoles } = require('../shared/types/roles');
 
 const router = Router();
 
