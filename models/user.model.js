@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const { EnumRoles } = require('../shared/types/roles');
+const { EnumRoles } = require('../shared/types/enums/roles');
 
 const UserSchema = Schema({
   name: {

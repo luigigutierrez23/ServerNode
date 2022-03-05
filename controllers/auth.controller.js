@@ -4,7 +4,7 @@ const bcryptjs = require('bcryptjs');
 const { User } = require('../models');
 
 const { getJWT, googleVerify } = require('../shared/helpers');
-const { EnumRoles } = require('../shared/types/roles');
+const { EnumRoles } = require('../shared/types/enums/roles');
 
 const Login = async (req = request, res = response) => {
   const { email, password } = req.body;

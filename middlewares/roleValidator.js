@@ -1,5 +1,5 @@
 const { response, request } = require('express');
-const { EnumRoles } = require('../shared/types/roles');
+const { EnumRoles } = require('../shared/types/enums/roles');
 
 const isAdminRole = (req = request, res = response, next) => {
   if (!req.user) {
