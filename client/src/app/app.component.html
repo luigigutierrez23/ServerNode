@@ -1,5 +1,2 @@
-<div class="container">
-  <ul class="mt-2" *ngIf="products">
-    <li *ngFor="let product of products.products">{{product.name}}</li>
-  </ul>
-</div>
+<custom-nav *ngIf="isLogged"></custom-nav>
+<app-login *ngIf="!isLogged"></app-login>

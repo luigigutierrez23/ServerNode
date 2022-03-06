@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { LoginService } from './services/login.service';
 
 @Component({
   selector: 'app-root',
@@ -7,21 +8,17 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'ASD';
+  isLogged: boolean = false;
   products: any;
 
-  constructor(public http: HttpClient){
+  constructor(private loginService: LoginService){
 
   }
 
   ngOnInit(){
-    this.getProducts();
-  }
-
-  getProducts(){
-    this.http.get('http://localhost:8081/api/products').subscribe((res) => {
-      this.products = res;
-    });
+    this.loginService.isLogged.subscribe(res => {
+      this.isLogged = res;
+    })
   }
 
   ngOnDestroy(){}

@@ -1,0 +1,32 @@
+<div class="text-center login">
+  <div class="form-signin">
+    <form #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off">
+      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+      <div class="form-floating mb-3">
+        <input
+          name="username"
+          [(ngModel)]="model.email"
+          type="email"
+          class="form-control"
+          placeholder="name@example.com"
+          >
+        <label for="floatingInput">Email address</label>
+      </div>
+
+      <div class="form-floating">
+        <input
+          name="password"
+          [(ngModel)]="model.password"
+          type="password"
+          class="form-control"
+          placeholder="Password"
+        >
+        <label for="floatingPassword">Password</label>
+      </div>
+
+      <button class="w-100 mt-3 btn btn btn-primary" type="submit">Sign in</button>
+      <p class="mt-5 mb-3 text-muted">© 2017–2021</p>
+    </form>
+  </div>
+</div>
