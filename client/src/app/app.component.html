@@ -1,2 +1,8 @@
-<custom-nav *ngIf="isLogged"></custom-nav>
-<app-login *ngIf="!isLogged"></app-login>
+<app-login *ngIf="(loginService.currentUser$ | async) === null"></app-login>
+
+<div *ngIf="loginService.currentUser$ | async">
+  <div style="margin-top: 50px;">
+    <app-sidebar></app-sidebar>
+  </div>
+</div>
+

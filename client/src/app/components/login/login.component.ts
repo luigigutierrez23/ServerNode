@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +13,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     email:'',
     password:''
   };
-  constructor(private loginService:LoginService) { }
+  constructor(
+    private loginService:LoginService,
+    private router:Router,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(){
   }
@@ -22,11 +28,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   login(){
     this.loginService.login(this.model).subscribe({
       next: (res) => {
-        this.loginService.isLogged.next(true);
-        console.log(this.loginService.isLogged, res, "Logged In!!");
+        this.router.navigateByUrl('/');
       },
       error: (err) => {
         console.log(err);
+        this.toastr.error(err.error.msg)
       }
     })
   }

@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LoginService } from './services/login.service';
+import { Login } from './models/login';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,19 +9,21 @@ import { LoginService } from './services/login.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  isLogged: boolean = false;
-  products: any;
+  currentUser$: Observable<Login>;
 
-  constructor(private loginService: LoginService){
-
-  }
+  constructor(public loginService: LoginService){}
 
   ngOnInit(){
-    this.loginService.isLogged.subscribe(res => {
-      this.isLogged = res;
-    })
+    this.currentUser$ = this.loginService.currentUser$;
+    console.log(this.currentUser$);
+
+    this.setCurrentUser();
+  }
+
+  setCurrentUser() {
+    const loginUser: Login = JSON.parse(localStorage.getItem('user'));
+    this.loginService.setCurrentUser(loginUser);
   }
 
   ngOnDestroy(){}
-
 }

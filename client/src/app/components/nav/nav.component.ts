@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'custom-nav',
@@ -8,13 +10,16 @@ import { LoginService } from '../../services/login.service';
 })
 export class NavComponent implements OnInit {
 
-  constructor(private loginService:LoginService) { }
+  constructor(
+    private loginService:LoginService,
+    private router: Router,
+    private toastr: ToastrService
+  ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   logout(){
-    this.loginService.isLogged.next(false);
+    this.loginService.logout();
+    this.router.navigateByUrl('/login');
   }
-
 }
